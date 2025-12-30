@@ -43,39 +43,31 @@
     --gradient-primary: linear-gradient(135deg, hsl(189 100% 50%) 0%, hsl(264 89% 68%) 100%);
   }
 
-  /* Global Overrides - PURE BLACK + NO SCROLL ON MOBILE */
-  html {
-    background-color: #000000 !important;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    height: 100dvh; /* Dynamic viewport for mobile */
-    width: 100vw;
-    overflow: hidden !important;
-    position: fixed;
-    overscroll-behavior: none;
-  }
-
-  body {
+  /* Global Overrides - PURE BLACK + SCROLLABLE */
+  html, body {
     background-color: #000000 !important;
     color: hsl(var(--foreground));
     margin: 0;
     padding: 0;
-    height: 100vh;
-    height: 100dvh;
-    width: 100vw;
-    overflow: hidden !important;
-    position: fixed;
-    overscroll-behavior: none;
+    width: 100%;
+  }
+
+  html {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
+  }
+
+  body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
     font-feature-settings: "liga" 1, "calt" 1;
-    touch-action: none; /* Prevents scroll gestures on mobile */
-    -webkit-overflow-scrolling: touch;
   }
 
   * {
     @apply border-border;
     box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
   }
 }
 
@@ -93,9 +85,6 @@
   .hero-bg {
     @apply bg-black min-h-screen w-full relative;
     background-color: #000000;
-    min-height: 100vh;
-    min-height: 100dvh;
-    overflow: hidden;
   }
 }
 
@@ -108,42 +97,54 @@
   width: 100%;
   height: 100%;
   background-image: url('/noise.png');
-  opacity: 0.02; /* Kept very low so black stays black */
+  opacity: 0.02;
   pointer-events: none;
   z-index: 1;
 }
 
-/* MOBILE SPECIFIC OPTIMIZATIONS */
+/* REMOVE ALL INNER SCROLLBARS - Only keep main page scrollbar */
+* {
+  overflow-x: hidden !important;
+}
+
+/* Remove scrollbar from all divs, sections, containers */
+div, section, main, article, aside, header, footer {
+  overflow: visible !important;
+}
+
+#root {
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
+
+/* MOBILE OPTIMIZATIONS - Smooth scrolling, no bounce */
 @media (max-width: 768px) {
-  html, body {
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden !important;
-    position: fixed;
-    width: 100vw;
+  html {
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
   }
   
+  body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior-y: none; /* Prevents bounce on iOS */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Make sure content fits mobile viewport */
   .hero-bg {
-    transform-origin: top left;
     min-height: 100vh;
-    min-height: 100dvh;
     width: 100vw;
   }
-
-  /* Scale content to fit mobile if needed */
-  body {
-    transform: scale(1); /* Adjust this value if content is too large */
-  }
 }
 
-/* Prevent iOS bounce and pull-to-refresh */
-body {
-  overscroll-behavior-y: contain;
+/* Hide scrollbars on all inner elements */
+*:not(html):not(body) {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
-/* Prevent any element from causing scroll */
-#root, #__next, .app, [data-reactroot] {
-  height: 100vh;
-  height: 100dvh;
-  overflow: hidden;
+*:not(html):not(body)::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
