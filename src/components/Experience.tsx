@@ -12,8 +12,8 @@ export const Experience = () => {
         <Card className="glass-card p-8 md:p-12 hover:shadow-[0_0_40px_rgba(0,217,255,0.2)] transition-all duration-500 group">
           <div className="flex flex-col md:flex-row gap-6 md:gap-8">
             <div className="flex-shrink-0">
-              <div className="p-4 rounded-2xl bg-gradient-to-br from-cyan/20 to-purple/20 group-hover:from-cyan/30 group-hover:to-purple/30 transition-all">
-                <Briefcase className="h-12 w-12 text-primary" />
+              <div className="p-3 sm:p-4 md:p-5 lg:p-6 rounded-2xl bg-gradient-to-br from-cyan/20 to-purple/20 group-hover:from-cyan/30 group-hover:to-purple/30 transition-all">
+                <Briefcase className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 lg:h-14 lg:w-14 text-primary" />
               </div>
             </div>
 
